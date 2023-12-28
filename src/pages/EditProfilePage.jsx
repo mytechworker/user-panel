@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Avtar1 from "../images/avtar1.png";
 import Avtar2 from "../images/avtar2.png";
 import Avtar3 from "../images/avtar3.png";
@@ -22,7 +22,16 @@ import { Link, useNavigate } from "react-router-dom";
 const EditProfilePage = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState("");
+  const [activeAvatar, setActiveAvatar] = useState(null);
   const [activeTab, setActiveTab] = useState("photo");
+
+  useEffect(() => {
+    // Check local storage for profileImage
+    const storedImage = localStorage.getItem("profileImage");
+    if (storedImage) {
+      setSelectedImage(storedImage);
+    }
+  }, []);
   const handleSave = () => {
     // Check if there is a selected image or avatar before saving
     if (selectedImage) {
@@ -30,12 +39,11 @@ const EditProfilePage = () => {
     }
     navigate("/"); // Navigate back to the profile page after saving
   };
-
   const handleImageSelection = (event) => {
     const file = event.target.files[0];
     if (file) {
       const extension = file.name.split(".").pop().toLowerCase();
-      const allowedExtensions = [".png", ".svg", ".jpg", ".webp"];
+      const allowedExtensions = [".png", ".svg", ".jpeg", ".webp"];
       if (allowedExtensions.includes(`.${extension}`)) {
         const imageUrl = URL.createObjectURL(file);
         setSelectedImage(imageUrl);
@@ -69,15 +77,15 @@ const EditProfilePage = () => {
 
   const handleAvatarSelection = (avatarUrl) => {
     setSelectedImage(avatarUrl);
+    setActiveAvatar(avatarUrl); // Set the active avatar on selection
   };
-
   const handleCancel = () => {
     navigate("/");
   };
 
   return (
     <section>
-      <div className="container w-full mx-auto max-w-full sm:max-w-screen-md px-5 pt-24">
+      <div className="container w-full mx-auto max-w-full sm:max-w-screen-md px-5 pt-24 relative">
         <p className="text-xl text-main font-normal pb-2">
           Choose profile photo.
         </p>
@@ -113,25 +121,35 @@ const EditProfilePage = () => {
         {activeTab === "photo" && (
           <>
             {/* Display selected image or avatar */}
-            <div className="profile-image-container max-w-xs w-full h-[320px] mb-6 rounded-full bg-slate-100 border-2 border-gray-300 mx-auto  flex items-center justify-center   overflow-hidden">
+            <div className="profile-image-container max-w-[328px] w-full h-[328px] mb-6 rounded-full bg-slate-100 border-2 border-gray-300 mx-auto  flex items-center justify-center   overflow-hidden">
               <img
-                className="profile-image object-cover rounded-full w-full h-full"
+                className="profile-image object-center object-cover  w-full h-[328px]"
                 src={selectedImage}
                 alt="Profile"
+                height="328px"
+                width="328px"
               />
             </div>
             <div className="custom-file-button flex flex-row relative">
               {/* Choose Photo from local files */}
-              <label className="flex flex-row  gap-2 py-2 px-3 justify-center absolute left-2/4 bg-slate-50 mx-auto w-32 text-white rounded-primary border border-solid border-gray-950 border-opacity-10">
+              <label
+                for="fileInput"
+                className="flex flex-row justify-center gap-2 py-2 px-4 absolute left-2/4 bg-slate-50 mx-auto w-32 text-white rounded-primary border border-solid border-gray-950 border-opacity-10"
+              >
                 <img
                   src={Camera}
                   alt="Edit Profile"
                   className="h-5 w-full max-w-5 "
+                  height={"22px"}
+                  width={"22px"}
                 />
-                <span className="text-base text-main font-normal ">Edit</span>
+                <span className="text-base text-main font-normal ">
+                  Edit photo
+                </span>
               </label>
               <input
                 type="file"
+                id="fileInput"
                 onChange={handleImageSelection}
                 className="text-transparent w-full relative z-10"
               />
@@ -142,13 +160,20 @@ const EditProfilePage = () => {
         {activeTab === "avatar" && (
           <>
             {/* Dummy Avatars */}
-            <div className="avatar-list flex flex-wrap gap-2">
+            <div className="avatar-list grid grid-cols-4 sm:grid-cols-7 gap-2 justify-center">
               {dummyAvatars.map((avatarUrl, index) => (
                 <img
                   key={index}
                   src={avatarUrl}
                   alt="Avtar_Image"
-                  className="avatar "
+                  // className={`avatar border-2 border-solid border-transparent rounded-full ${
+                  //   activeAvatar === avatarUrl ? "border-teal-light " : ""
+                  // }`}
+                  className={`avatar ${
+                    activeAvatar === avatarUrl
+                      ? "border-teal-light border-2 rounded-full"
+                      : ""
+                  }`}
                   width="90"
                   height="90"
                   onClick={() => handleAvatarSelection(avatarUrl)}
@@ -161,7 +186,7 @@ const EditProfilePage = () => {
         {/* Save and Cancel buttons */}
         <button
           onClick={handleSave}
-          className="bg-white border mx-auto hover:bg-teal-light border-teal-light w-full sm:w-2/12 text-base font-normal py-3 mt-36 sm:mt-6 px-4 text-teal-light hover:text-white rounded-xl "
+          className="bg-white border mx-auto hover:bg-teal-light border-teal-light w-full sm:w-2/12 text-base font-normal py-3 mt-28 sm:mt-20 px-4 text-teal-light hover:text-white rounded-xl "
         >
           Save
         </button>

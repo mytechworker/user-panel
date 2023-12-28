@@ -12,25 +12,18 @@ body {
 *{
   margin: 0;
   padding:0;
+  outline: none;
   box-sizing: border-box;
 }
 
 .custom-file-button {
 	input[type="file"] {
-		margin-left: -2px !important;
 
 		&::-webkit-file-upload-button {
 			display: none;
 		}
 		&::file-selector-button {
 			display: none;
-		}
-	}
-
-	&:hover {
-		label {
-			background-color: #dde0e3;
-			cursor: pointer;
 		}
 	}
 }
@@ -41,6 +34,17 @@ body {
 .custom-file-button input{
   height: 42px;
 }
-input:focus{
-  border: none;
+.custom-file-button input[type="file"]{
+	display: none;
+}
+.birth_date{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+   background-image: url("./images/arrow.svg");
+   background-repeat: no-repeat;
+   background-position: 97%;
+}
+input:focus-visible{
+	outline: none;
 }

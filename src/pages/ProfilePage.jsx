@@ -76,16 +76,16 @@ const ProfilePage = () => {
 
   return (
     <section className="">
-      <div className="container w-full mx-auto max-w-full sm:max-w-screen-md px-5 pt-24">
+      <div className="container w-full mx-auto max-w-full sm:max-w-screen-md px-5 pt-[91px]">
         <p className="text-xl text-main font-normal pb-2">
           Let’s get to know you
         </p>
-        <p className="text-base text-main font-normal mb-6">
+        <p className="text-base text-secondery font-normal mb-6">
           Let us get to know you a bit better so you can get the best out of us
         </p>
         <div className="profile_form">
-          <div className="flex items-center mb-12 flex-col relative">
-            <div className="w-full max-w-40 h-40 flex items-center justify-center bg-gray-300 rounded-full overflow-hidden">
+          <div className="flex items-center mb-10 flex-col relative">
+            <div className="w-full max-w-40 h-40 flex items-center justify-center bg-gray-300 border-1 border-slate-950 border-opacity-5 border-gray-300 rounded-full overflow-hidden">
               {profileImage ? (
                 <img
                   src={profileImage}
@@ -116,20 +116,19 @@ const ProfilePage = () => {
           <div className="mb-4">
             <label
               htmlFor="firstName"
-              className=" font-normal mb-1 flex gap-1 text-sm"
+              className=" font-normal mb-1 flex gap-1 text-sm text-slate-950 opacity-70"
             >
               First Name <span className="text-red-600">*</span>
             </label>
             <input
               type="text"
               id="firstName"
-              placeholder="First Name"
               value={firstName}
               onChange={(e) => {
                 setFirstName(e.target.value);
                 setFirstNameError(false);
               }}
-              className={`border border-gray-300 bg-gray-50 rounded-xl  py-2.5 px-4 w-full text-base font-normal text-main ${
+              className={`border border-gray-300 bg-gray-50 rounded-xl  py-2.5 px-4 w-full text-base font-normal text-main leading ${
                 firstNameError && !firstName ? "border-red-500" : ""
               }`}
             />
@@ -142,20 +141,19 @@ const ProfilePage = () => {
           <div className="mb-4">
             <label
               htmlFor="lastName"
-              className=" font-normal mb-1 flex gap-1 text-sm"
+              className=" font-normal mb-1 flex gap-1 text-sm text-sm text-slate-950 opacity-70"
             >
               Last Name <span className="text-red-600">*</span>
             </label>
             <input
               type="text"
               id="lastName"
-              placeholder="Last Name"
               value={lastName}
               onChange={(e) => {
                 setLastName(e.target.value);
                 setLastNameError(false);
               }}
-              className={`border border-gray-300  bg-gray-50 rounded-xl  py-2.5 px-4 w-full text-base font-normal text-main ${
+              className={`border border-gray-300  bg-gray-50 rounded-xl  py-2.5 px-4 w-full text-base font-normal text-main leading ${
                 lastNameError && !lastName ? "border-red-500" : ""
               }`}
             />
@@ -165,10 +163,10 @@ const ProfilePage = () => {
               </span>
             )}
           </div>
-          <div className="mb-4">
+          <div>
             <label
               htmlFor="yearOfBirth"
-              className=" font-normal mb-1 flex gap-1 text-sm"
+              className=" font-normal mb-1 flex gap-1 text-sm text-sm text-slate-950 opacity-70"
             >
               {" "}
               Year of Birth <span className="text-red-600">*</span>
@@ -180,7 +178,7 @@ const ProfilePage = () => {
                 setYearOfBirth(e.target.value);
                 setYearOfBirthError(false);
               }}
-              className={`border border-gray-300 bg-gray-50 rounded-xl  py-2.5 px-4 w-full text-base font-normal text-main ${
+              className={`border border-gray-300 bg-gray-50 rounded-xl  py-2.5 px-4 w-full text-base font-normal text-main birth_date ${
                 yearOfBirthError && !yearOfBirth ? "border-red-500" : ""
               }`}
             >
@@ -195,7 +193,7 @@ const ProfilePage = () => {
           </div>
           <button
             onClick={handleSave}
-            className="bg-teal-light w-full sm:w-2/12 text-base font-normal py-3 mt-28 sm:mt-6 px-4 text-white  rounded-xl "
+            className="bg-teal-light w-full sm:w-2/12 text-base font-normal py-3 mt-28  mb-3 sm:mt-6 px-4 text-white  rounded-xl "
           >
             Save
           </button>
